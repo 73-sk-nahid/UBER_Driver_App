@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uberdriverapp/authentication/login_screen.dart';
 import 'package:uberdriverapp/methods/common_methods.dart';
 import 'package:uberdriverapp/pages/dashboard.dart';
@@ -24,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController vehicleNumberTextEditingController = TextEditingController();
   TextEditingController driverLicenseNumberTextEditingController = TextEditingController();
   CommonMethods cMethods = CommonMethods();
+  XFile? imageFile;
 
   checkIsInternetAvailable() {
     cMethods.checkConnectivity(context);
@@ -40,9 +44,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 35,
               ),
+              imageFile == null ?
               const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage("assets/images/avatarman.png"),
+              ) : Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey,
+                  image: DecorationImage(
+                    fit: BoxFit.fitHeight,
+                    image: FileImage(
+                      File(
+                        imageFile!.path,
+                      )
+                    )
+                  )
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -350,7 +370,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   } */
   }
 
-  void chooseImageFromGallery() {
+  void chooseImageFromGallery() async{
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
+    if (pickedFile != null)
+      {
+        setState(() {
+          imageFile = pickedFile;
+        });
+      }
   }
 }
