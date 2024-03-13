@@ -165,7 +165,7 @@ class _LogInScreenState extends State<LogInScreen> {
         if (snap.snapshot.value != null) {
           if ((snap.snapshot.value as Map)["blockStatus"] == "no") {
             userName = ((snap.snapshot.value as Map)["name"]);
-            Navigator.push(context, MaterialPageRoute(builder: (c) => const dashboard()));
+            Navigator.push(context, MaterialPageRoute(builder: (c) => const Dashboard()));
           } else {
             FirebaseAuth.instance.signOut();
             cMethods.displaySnackBar(

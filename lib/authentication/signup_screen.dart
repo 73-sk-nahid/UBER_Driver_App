@@ -220,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       };
 
       usersRef.set(userDataMap);
-      Navigator.push(context, MaterialPageRoute(builder: (c) => dashboard()));
+      Navigator.push(context, MaterialPageRoute(builder: (c) => Dashboard()));
     } catch (error) {
       Navigator.pop(context); // Dismiss the loading dialog in case of an error
       cMethods.displaySnackBar("Error: $error", context);
