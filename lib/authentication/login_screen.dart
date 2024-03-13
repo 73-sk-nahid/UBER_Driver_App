@@ -27,7 +27,15 @@ class _LogInScreenState extends State<LogInScreen> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Image.asset("assets/images/uberexec.png"),
+              const SizedBox(
+                height: 160,
+              ),
+              Image.asset("assets/images/uberexec.png",
+              width:  300,
+              ),
+              const SizedBox(
+                height: 100,
+              ),
               const Text(
                 "Log In Here",
                 style: TextStyle(

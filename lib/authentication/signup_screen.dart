@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uberdriverapp/authentication/login_screen.dart';
 import 'package:uberdriverapp/methods/common_methods.dart';
@@ -16,9 +17,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userNameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController phoneNumberTextEditingController =
-      TextEditingController();
+  TextEditingController phoneNumberTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController vehicleNameTextEditingController = TextEditingController();
+  TextEditingController vehicleColorTextEditingController = TextEditingController();
+  TextEditingController vehicleNumberTextEditingController = TextEditingController();
+  TextEditingController driverLicenseNumberTextEditingController = TextEditingController();
   CommonMethods cMethods = CommonMethods();
 
   checkIsInternetAvailable() {
@@ -33,12 +37,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Image.asset("assets/images/logo.png"),
-              const Text(
-                "Sign Up Here",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(
+                height: 35,
+              ),
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage("assets/images/avatarman.png"),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: ()
+                {
+                  chooseImageFromGallery();
+                },
+                child: const Text(
+                  "Select Image",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Padding(
@@ -49,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: userNameTextEditingController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
-                        labelText: "User Name",
+                        labelText: "Your Name",
                         labelStyle: TextStyle(
                           fontSize: 14,
                         ),
@@ -66,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: emailTextEditingController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                        labelText: "User E-mail",
+                        labelText: "Your E-mail",
                         labelStyle: TextStyle(
                           fontSize: 14,
                         ),
@@ -83,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: phoneNumberTextEditingController,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
-                        labelText: "User Phone Number",
+                        labelText: "Your Phone Number",
                         labelStyle: TextStyle(
                           fontSize: 14,
                         ),
@@ -106,7 +125,75 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: const InputDecoration(
-                        labelText: "User Password",
+                        labelText: "Your Password",
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    TextField(
+                      controller: vehicleNameTextEditingController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        labelText: "Car Model Name",
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    TextField(
+                      controller: vehicleColorTextEditingController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        labelText: "Car Color",
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    TextField(
+                      controller: vehicleNumberTextEditingController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        labelText: "Car Number Plate No",
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    TextField(
+                      controller: driverLicenseNumberTextEditingController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        labelText: "Your License Number",
                         labelStyle: TextStyle(
                           fontSize: 14,
                         ),
@@ -261,5 +348,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     usersRef.set(userDataMap);
     Navigator.push(context, MaterialPageRoute(builder: (c) => HomePage()));
   } */
+  }
+
+  void chooseImageFromGallery() {
+
   }
 }
