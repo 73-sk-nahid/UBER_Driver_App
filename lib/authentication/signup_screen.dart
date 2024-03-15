@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,10 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController driverLicenseNumberTextEditingController = TextEditingController();
   CommonMethods cMethods = CommonMethods();
   XFile? imageFile;
-
-  checkIsInternetAvailable() {
-    cMethods.checkConnectivity(context);
-  }
+  String imageURL = "";
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +227,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ElevatedButton(
                       onPressed: () {
                         checkIsInternetAvailable();
-                        checkInfoValidation();
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
@@ -256,6 +253,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  checkIsInternetAvailable() {
+    cMethods.checkConnectivity(context);
+
+    if (imageFile!= null) 
+    {
+      checkInfoValidation();
+    }
+    else
+    {
+      cMethods.displaySnackBar("Please Choose an Image", context);
+    }
   }
 
   void checkInfoValidation() {
@@ -285,12 +295,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .trim()
         .contains(RegExp(r'[!@#%^&*(),.?":{}|<>]'))) {
       cMethods.displaySnackBar("Must use Special Character", context);
+    }
+    else if (vehicleNameTextEditingController.text.trim().length < 3) {
+      cMethods.displaySnackBar("Enter Vehicle Name", context);
+    }
+    else if (vehicleColorTextEditingController.text.trim().length < 3) {
+      cMethods.displaySnackBar("Input a Color Name", context);
+    }
+    else if (vehicleNumberTextEditingController.text.trim().length < 10) {
+      cMethods.displaySnackBar("Input must be 10 digit", context);
+    }
+    else if (driverLicenseNumberTextEditingController.text.trim().length < 15) {
+      cMethods.displaySnackBar("Must use Special Character", context);
     } else {
-      registerUser();
+      uploadImageToStorage();
     }
   }
 
-  void registerUser() async {
+  uploadImageToStorage() async
+  {
+    String imageID = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference referenceImage = FirebaseStorage.instance.ref().child("Drivers_Image").child(imageID);
+    UploadTask uploadTask = referenceImage.putFile(File(imageFile!.path));
+    TaskSnapshot snapshot = await uploadTask;
+    imageURL = await snapshot.ref.getDownloadURL();
+
+    setState(() {
+      imageURL;
+    });
+    registerDriver();
+  }
+
+  void registerDriver() async {
     try {
       showDialog(
         context: context,
@@ -319,9 +355,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .child("drivers")
           .child(userFirebase.uid);
       Map userDataMap = {
+        "photo": imageURL,
         "name": userNameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "phone": "0" + phoneNumberTextEditingController.text.trim(),
+        "carModel": vehicleNameTextEditingController.text.trim(),
+        "carColor": vehicleColorTextEditingController.text.trim(),
+        "carNumber": vehicleNumberTextEditingController.text.trim(),
+        "driverLicense": driverLicenseNumberTextEditingController.text.trim(),
         "id": userFirebase.uid,
         "blockStatus": "no",
       };
