@@ -21,12 +21,17 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userNameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController phoneNumberTextEditingController = TextEditingController();
+  TextEditingController phoneNumberTextEditingController =
+      TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-  TextEditingController vehicleNameTextEditingController = TextEditingController();
-  TextEditingController vehicleColorTextEditingController = TextEditingController();
-  TextEditingController vehicleNumberTextEditingController = TextEditingController();
-  TextEditingController driverLicenseNumberTextEditingController = TextEditingController();
+  TextEditingController vehicleNameTextEditingController =
+      TextEditingController();
+  TextEditingController vehicleColorTextEditingController =
+      TextEditingController();
+  TextEditingController vehicleNumberTextEditingController =
+      TextEditingController();
+  TextEditingController driverLicenseNumberTextEditingController =
+      TextEditingController();
   CommonMethods cMethods = CommonMethods();
   XFile? imageFile;
   String imageURL = "";
@@ -42,32 +47,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 35,
               ),
-              imageFile == null ?
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage("assets/images/avatarman.png"),
-              ) : Container(
-                width: 180,
-                height: 180,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                  image: DecorationImage(
-                    fit: BoxFit.fitHeight,
-                    image: FileImage(
-                      File(
-                        imageFile!.path,
-                      )
+              imageFile == null
+                  ? const CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          AssetImage("assets/images/avatarman.png"),
                     )
-                  )
-                ),
-              ),
+                  : Container(
+                      width: 180,
+                      height: 180,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: FileImage(File(
+                                imageFile!.path,
+                              )))),
+                    ),
               const SizedBox(
                 height: 10,
               ),
               GestureDetector(
-                onTap: ()
-                {
+                onTap: () {
                   chooseImageFromGallery();
                 },
                 child: const Text(
@@ -258,12 +260,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   checkIsInternetAvailable() {
     cMethods.checkConnectivity(context);
 
-    if (imageFile!= null) 
-    {
+    if (imageFile != null) {
       checkInfoValidation();
-    }
-    else
-    {
+    } else {
       cMethods.displaySnackBar("Please Choose an Image", context);
     }
   }
@@ -295,27 +294,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .trim()
         .contains(RegExp(r'[!@#%^&*(),.?":{}|<>]'))) {
       cMethods.displaySnackBar("Must use Special Character", context);
-    }
-    else if (vehicleNameTextEditingController.text.trim().length < 3) {
+    } else if (vehicleNameTextEditingController.text.trim().length < 3) {
       cMethods.displaySnackBar("Enter Vehicle Name", context);
-    }
-    else if (vehicleColorTextEditingController.text.trim().length < 3) {
+    } else if (vehicleColorTextEditingController.text.trim().length < 3) {
       cMethods.displaySnackBar("Input a Color Name", context);
-    }
-    else if (vehicleNumberTextEditingController.text.trim().length < 10) {
+    } else if (vehicleNumberTextEditingController.text.trim().length < 10) {
       cMethods.displaySnackBar("Input must be 10 digit", context);
-    }
-    else if (driverLicenseNumberTextEditingController.text.trim().length < 15) {
+    } else if (driverLicenseNumberTextEditingController.text.trim().length <
+        15) {
       cMethods.displaySnackBar("Must use Special Character", context);
     } else {
       uploadImageToStorage();
     }
   }
 
-  uploadImageToStorage() async
-  {
+  uploadImageToStorage() async {
     String imageID = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference referenceImage = FirebaseStorage.instance.ref().child("Drivers_Image").child(imageID);
+    Reference referenceImage =
+        FirebaseStorage.instance.ref().child("Drivers_Image").child(imageID);
     UploadTask uploadTask = referenceImage.putFile(File(imageFile!.path));
     TaskSnapshot snapshot = await uploadTask;
     imageURL = await snapshot.ref.getDownloadURL();
@@ -354,14 +350,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .ref()
           .child("drivers")
           .child(userFirebase.uid);
+
+      Map carDetails = {
+        "carModel": vehicleNameTextEditingController.text.trim(),
+        "carColor": vehicleColorTextEditingController.text.trim(),
+        "carNumber": vehicleNumberTextEditingController.text.trim(),
+      };
       Map userDataMap = {
         "photo": imageURL,
         "name": userNameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "phone": "0" + phoneNumberTextEditingController.text.trim(),
-        "carModel": vehicleNameTextEditingController.text.trim(),
-        "carColor": vehicleColorTextEditingController.text.trim(),
-        "carNumber": vehicleNumberTextEditingController.text.trim(),
+        "carDetails": carDetails,
         "driverLicense": driverLicenseNumberTextEditingController.text.trim(),
         "id": userFirebase.uid,
         "blockStatus": "no",
@@ -411,14 +411,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   } */
   }
 
-  void chooseImageFromGallery() async{
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  void chooseImageFromGallery() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null)
-      {
-        setState(() {
-          imageFile = pickedFile;
-        });
-      }
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = pickedFile;
+      });
+    }
   }
 }
