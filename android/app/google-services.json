@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "774900522703",
+    "firebase_url": "https://uber-demo-app-cd270-default-rtdb.firebaseio.com",
+    "project_id": "uber-demo-app-cd270",
+    "storage_bucket": "uber-demo-app-cd270.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774900522703:android:c4d9d9ba794e75fd3a21ba",
+        "android_client_info": {
+          "package_name": "com.example.uber_clone_user_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZDqr8Va2drRaWXkCJyddm6BwfmEXJyRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774900522703:android:24dc5989090d76bb3a21ba",
+        "android_client_info": {
+          "package_name": "com.example.uberdriverapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZDqr8Va2drRaWXkCJyddm6BwfmEXJyRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
