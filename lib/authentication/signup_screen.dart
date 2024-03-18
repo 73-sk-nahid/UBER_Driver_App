@@ -281,28 +281,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else if (!passwordTextEditingController.text
         .trim()
         .contains(RegExp(r'[A-Z]'))) {
-      cMethods.displaySnackBar("Must use Uppercase", context);
+      cMethods.displaySnackBar("Must use Uppercase in password", context);
     } else if (!passwordTextEditingController.text
         .trim()
         .contains(RegExp(r'[a-z]'))) {
-      cMethods.displaySnackBar("Must use Lowercase", context);
+      cMethods.displaySnackBar("Must use Lowercase in password", context);
     } else if (!passwordTextEditingController.text
         .trim()
         .contains(RegExp(r'[0-9]'))) {
-      cMethods.displaySnackBar("Must use Digit", context);
+      cMethods.displaySnackBar("Must use Digit in password", context);
     } else if (!passwordTextEditingController.text
         .trim()
         .contains(RegExp(r'[!@#%^&*(),.?":{}|<>]'))) {
-      cMethods.displaySnackBar("Must use Special Character", context);
+      cMethods.displaySnackBar("Must use Special Character in password", context);
     } else if (vehicleNameTextEditingController.text.trim().length < 3) {
       cMethods.displaySnackBar("Enter Vehicle Name", context);
     } else if (vehicleColorTextEditingController.text.trim().length < 3) {
-      cMethods.displaySnackBar("Input a Color Name", context);
+      cMethods.displaySnackBar("Enter vehicle Color Name", context);
     } else if (vehicleNumberTextEditingController.text.trim().length < 10) {
-      cMethods.displaySnackBar("Input must be 10 digit", context);
+      cMethods.displaySnackBar("Enter vehicle license number", context);
     } else if (driverLicenseNumberTextEditingController.text.trim().length <
         15) {
-      cMethods.displaySnackBar("Must use Special Character", context);
+      cMethods.displaySnackBar("License Number must be 16 digit", context);
     } else {
       uploadImageToStorage();
     }
