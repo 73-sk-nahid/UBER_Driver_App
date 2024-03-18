@@ -373,42 +373,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       Navigator.pop(context); // Dismiss the loading dialog in case of an error
       cMethods.displaySnackBar("Error: $error", context);
     }
-
-    /*  void registerUser() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) =>
-          const LoadingDialog(messageText: "Registering your account.."),
-    );
-
-    final User? userFirebase = (
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailTextEditingController.text.trim(),
-      password: passwordTextEditingController.text.trim(),
-    )
-            .catchError((errorMsg) 
-            {
-              Navigator.pop(context);
-              cMethods.displaySnackBar(errorMsg.toString(), context);
-    })).user;
-
-    if (!context.mounted) return;
-    Navigator.pop(context);
-
-    DatabaseReference usersRef =
-        FirebaseDatabase.instance.ref().child("users").child(userFirebase!.uid);
-    Map userDataMap = {
-      "name": userNameTextEditingController.text.trim(),
-      "email": emailTextEditingController.text.trim(),
-      "phone": phoneNumberTextEditingController.text.trim(),
-      "id": userFirebase.uid,
-      "blockStatus": "no",
-    };
-
-    usersRef.set(userDataMap);
-    Navigator.push(context, MaterialPageRoute(builder: (c) => HomePage()));
-  } */
   }
 
   void chooseImageFromGallery() async {
